@@ -11,11 +11,29 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    var window: UIWindow?
-
-
+    
+    
+    
+    //xcode'da proje oluştururken single view application template'ini kullanıp default gelen stroyboard'ı siliyoruz.
+    //fakat bu storyBoard'ı sildikten sonra uygulamamız build ettiğimizde çökecektir.
+    //bunun nedeni de targets/info alanında yer alan Custom IOS Target Properties alanında tanımlı olan Main storyboard file base name set'idir.
+    //dolayısıyla Main storyboard file base name satırını komple siliyoruz.
+    
+    //tabi ortada artık bir storyboard kalmadığı için window'u da manuel olarak tanımlamalıyız.
+    var window: UIWindow? = UIWindow()
+    //daha sonra programsal olarak oluşturuacağımız viewController'ımızı için mevcut viewController class'ımızı bir değişkene atıyoruz.
+    var viewController: ViewController = ViewController()
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        //öncelikle uygulamanın çalışacağı cihaza ait ekran ölçülerine ihtiyacımız var. Bu ölçüleri alıp bounds değişkenimize atıyoruz
+        let bounds:CGRect = UIScreen.mainScreen().bounds
+        //window ölçülerini cihazımızın ekran ölçülerine set ediyoruz.
+        self.window!.frame = bounds
+        //şimdi sıra geldi viewController'ımızı rootViewController olarak window'un altına atmaya.
+        self.window!.rootViewController = self.viewController
+        //ve son olarak atadığımız rootViewController'ın window içerisinde görünmesini sağlamalıyız.
+        self.window!.makeKeyAndVisible()
+        //appDelegate içerisinde yapacağımız değişiklikler bu kadar artık window ve viewController'ımız programsal olarak yaratıldılar ve üzerlerinde çalışılmaya hazırlar.
         return true
     }
 
